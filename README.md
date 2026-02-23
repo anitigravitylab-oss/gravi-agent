@@ -21,33 +21,34 @@
 3. `Extensions: Install from VSIX...` と入力して選択
 4. さっきダウンロードした `.vsix` ファイルを選択
 
-### ステップ3: CDP を有効にする
+### ステップ3: CDP を有効にする（自動）
 
-Gravi Agent は Antigravity のブラウザ機能（CDP）を使って動きます。  
-**初回だけ**、以下の設定が必要です：
+Gravi Agent は Antigravity のブラウザ機能（CDP）を使って動きます。
 
-#### Windows の場合
+**初回起動時、自動で設定してくれます：**
 
+1. Gravi Agent が「CDP ポートを有効にするため再起動が必要です」と表示
+2. **「再起動する」を選択**
+3. Antigravity が自動で再起動し、CDP が有効になります
+
+> 💡 ショートカットに `--remote-debugging-port=9222` を自動で追加してくれるので、  
+> 次回以降は何もしなくても CDP が有効な状態で起動します。
+
+<details>
+<summary>📌 自動設定がうまくいかない場合（手動設定）</summary>
+
+#### Windows
 Antigravity のショートカットを右クリック → プロパティ → 「リンク先」の末尾に追加：
-
 ```
- --remote-debugging-port=9004
-```
-
-例：
-```
-"C:\Program Files\Antigravity\antigravity.exe" --remote-debugging-port=9004
+ --remote-debugging-port=9222
 ```
 
-#### Mac の場合
-
+#### Mac
 ターミナルで以下を実行：
 ```bash
-antigravity --remote-debugging-port=9004
+antigravity --remote-debugging-port=9222
 ```
-
-> 💡 Gravi Agent が自動でショートカットを修正してくれる機能もあります。  
-> 初回起動時に「再起動しますか？」と聞かれたら「再起動する」を選んでください。
+</details>
 
 #### ⚠️ CDP ポートを合わせる
 
