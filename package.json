@@ -1,0 +1,140 @@
+{
+    "name": "gravi-agent",
+    "displayName": "Gravi Agent",
+    "description": "Auto-accept actions, send prompts, and manage task queues for Antigravity AI agent.",
+    "version": "0.1.0",
+    "publisher": "antigravity-lab",
+    "license": "MIT",
+    "icon": "icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/anitigravitylab-oss/gravi-agent.git"
+    },
+    "categories": [
+        "Other"
+    ],
+    "keywords": [
+        "antigravity",
+        "auto-accept",
+        "agent",
+        "automation",
+        "queue"
+    ],
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "gravi-agent.toggle",
+                "title": "Gravi Agent: ON/OFF 切り替え"
+            },
+            {
+                "command": "gravi-agent.sendPrompt",
+                "title": "Gravi Agent: プロンプト送信"
+            },
+            {
+                "command": "gravi-agent.startQueue",
+                "title": "Gravi Agent: キュー開始"
+            },
+            {
+                "command": "gravi-agent.stopQueue",
+                "title": "Gravi Agent: キュー停止"
+            },
+            {
+                "command": "gravi-agent.openSettings",
+                "title": "Gravi Agent: 設定"
+            }
+        ],
+        "configuration": {
+            "title": "Gravi Agent",
+            "properties": {
+                "gravi-agent.autoStart": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "CDP ポートが利用可能な場合に自動的に ON にするか"
+                },
+                "gravi-agent.cdpPort": {
+                    "type": "number",
+                    "default": 9004,
+                    "minimum": 1024,
+                    "maximum": 65535,
+                    "description": "CDP ポート番号"
+                },
+                "gravi-agent.pollInterval": {
+                    "type": "number",
+                    "default": 1000,
+                    "minimum": 500,
+                    "maximum": 5000,
+                    "description": "Auto-Accept のポーリング間隔（ミリ秒）"
+                },
+                "gravi-agent.schedule.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "スケジュールプロンプトを有効にする"
+                },
+                "gravi-agent.schedule.mode": {
+                    "type": "string",
+                    "enum": [
+                        "queue",
+                        "interval"
+                    ],
+                    "default": "queue",
+                    "description": "スケジュールモード: queue（順次実行）または interval（定期実行）"
+                },
+                "gravi-agent.schedule.prompts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [],
+                    "description": "キューモードで順次実行するプロンプトリスト"
+                },
+                "gravi-agent.schedule.silenceTimeout": {
+                    "type": "number",
+                    "default": 30,
+                    "minimum": 10,
+                    "maximum": 300,
+                    "description": "タスク完了判定の無操作時間（秒）"
+                },
+                "gravi-agent.schedule.intervalMinutes": {
+                    "type": "number",
+                    "default": 30,
+                    "minimum": 1,
+                    "description": "Interval モードの実行間隔（分）"
+                },
+                "gravi-agent.schedule.intervalPrompt": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Interval モードで送信するプロンプト"
+                },
+                "gravi-agent.safety.bannedPatterns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "rm -rf",
+                        "format c:",
+                        "del /f /s /q"
+                    ],
+                    "description": "ブロックするコマンドパターン（正規表現対応）"
+                }
+            }
+        }
+    },
+    "dependencies": {
+        "ws": "^8.13.0"
+    },
+    "devDependencies": {
+        "esbuild": "^0.27.1"
+    },
+    "scripts": {
+        "compile": "esbuild extension.js --bundle --outfile=dist/extension.js --external:vscode --platform=node --format=cjs",
+        "package": "npx vsce package"
+    }
+}
