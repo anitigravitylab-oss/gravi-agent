@@ -104,7 +104,7 @@ Antigravity 側の CDP ポート設定と、Gravi Agent のポート設定を **
 A: `Ctrl + Shift + P` → `Developer: Reload Window` を試してください。
 
 ### Q: ON にしても動かない
-A: CDP が有効になっていません。ステップ3の手順で `--remote-debugging-port=9004` を設定してください。
+A: CDP が有効になっていません。ステップ3の手順で CDP を有効にしてください。
 
 ### Q: 勝手にヤバいコマンドを実行しない？
 A: `rm -rf` や `format c:` などの危険コマンドは自動ブロックされます。設定からパターンを追加できます。
