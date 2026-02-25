@@ -3,3 +3,9 @@ node_modules/
 .vscode-test/
 .agent/
 tools/
+src/
+extension.js
+.git/
+.gitignore
+package-lock.json
+!dist/
