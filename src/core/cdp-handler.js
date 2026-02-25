@@ -9,10 +9,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-// browser-payload.js を直接読み込み（中間ファイル不要）
-const BROWSER_PAYLOAD = fs.readFileSync(
-    path.join(__dirname, 'browser-payload.js'), 'utf8'
-);
+// browser-payload をバンドル対応で読み込み（esbuildでインライン化される）
+const BROWSER_PAYLOAD = require('./browser-payload-string');
 
 // 診断ログ
 const DIAG_LOG = path.join(os.tmpdir(), 'gravi-diag.log');
